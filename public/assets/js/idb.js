@@ -25,7 +25,7 @@ request.onsuccess = function (event) {
 
 request.onerror = function (event) {
     //log error here
-    console.log(event.target.onerrorCode);
+    console.log(event.target.errorCode);
 };
 
 // This function will be executed if we attempt to submit a new pizza and there's no internet connection 

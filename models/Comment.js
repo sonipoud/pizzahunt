@@ -15,7 +15,8 @@ const ReplySchema = new Schema(
         },
         writtenBy: {
             type: String,
-            required: true
+            required: true,
+            trim: true
         },
         createdAt: {
             type: Date,
@@ -30,23 +31,24 @@ const ReplySchema = new Schema(
     }
 );
 
-const CommentSchema = new Schema({
-    writtenBy: {
-        type: String,
-        required: true
+const CommentSchema = new Schema(
+    {
+        writtenBy: {
+            type: String,
+            required: true
+        },
+        commentBody: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: createdAtVal => dateFormat(createdAtVal)
+        },
+        replies: [ReplySchema]
     },
-    commentBody: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        get: createdAtVal => dateFormat(createdAtVal)
-    },
-    replies: [ReplySchema]
-},
     {
         toJSON: {
             virtuals: true,
@@ -56,7 +58,7 @@ const CommentSchema = new Schema({
     }
 );
 
-CommentSchema.virtual('replyCount').get(function(){
+CommentSchema.virtual('replyCount').get(function () {
     return this.replies.length;
 });
 
