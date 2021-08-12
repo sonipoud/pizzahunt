@@ -27,7 +27,8 @@ const commentController = {
         Comment.findOneAndUpdate(
             { _id: params.commentId },
             { $push: { replies: body } },
-            { new: true }
+            { new: true },
+            { runValidators: true }
         )
             .then(dbPizzaData => {
                 if (!dbPizzaData) {
